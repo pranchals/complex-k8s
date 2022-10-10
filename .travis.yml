@@ -1,0 +1,17 @@
+language: generic
+sudo: required
+service:
+  - docker
+
+before_install:
+  - docker build -t pranchal04/react-test -f ./client/Dockerfile.dev ./client
+
+# primart test running section
+script:
+  - docker run -e CI=true pranchal04/react-test npm test
+
+after_success:
+  - docker build -t pranchal04/multi-client ./client
+  - docker build -t pranchal04/multi-nginx ./nginx
+  - docker build -t pranchal04/multi-server ./server
+  - docker build -t pranchal04/multi-worker ./worker
