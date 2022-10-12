@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-cluster-ip-service
+
+spec:
+  type: ClusterIP
+  # to connect to the labels of client pods
+  selector:
+    component: web
+  ports:
+    - port: 3000 # for other pods to connect to
+      targetPort: 3000 # the port of the client pod
