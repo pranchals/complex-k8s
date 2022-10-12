@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: postgres
+  name: postgres-deployment
 
 spec:
   replicas: 1
@@ -28,11 +28,11 @@ spec:
           volumeMounts:
             - name: postgres-storage # same as volume name
               mountPath: /var/lib/postgresql/data # default path of postgres storage
-              # only for postgres
+              # only for postgresOne
               subPath: postgres # root folder (subfolder)
           # overring the default password
           env:
-            - name: PG_PASSWORD
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgpassword
