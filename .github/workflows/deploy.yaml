@@ -42,24 +42,24 @@ jobs:
     # Here the SHA is the one associated with each commit to github and it is unique
       - name: Build
         run: |-
-          docker build -t pranchal04/multi-client-k8s-gh:latest -t pranchal04/multi-client-k8s-gh:${{ env.SHA }} -f ./client/Dockerfile ./client
-          docker build -t pranchal04/multi-server-k8s-pgfix-gh:latest -t pranchal04/multi-server-k8s-pgfix-gh:${{ env.SHA }} -f ./server/Dockerfile ./server
-          docker build -t pranchal04/multi-worker-k8s-gh:latest -t pranchal04/multi-worker-k8s-gh:${{ env.SHA }} -f ./worker/Dockerfile ./worker
+          docker build -t pranchal04/multi-client:latest -t pranchal04/multi-client:${{ env.SHA }} -f ./client/Dockerfile ./client
+          docker build -t pranchal04/multi-server:latest -t pranchal04/multi-server:${{ env.SHA }} -f ./server/Dockerfile ./server
+          docker build -t pranchal04/multi-worker:latest -t pranchal04/multi-worker:${{ env.SHA }} -f ./worker/Dockerfile ./worker
  
       - name: Push
         run: |-
-          docker push pranchal04/multi-client-k8s-gh:latest
-          docker push pranchal04/multi-server-k8s-pgfix-gh:latest
-          docker push pranchal04/multi-worker-k8s-gh:latest
+          docker push pranchal04/multi-client:latest
+          docker push pranchal04/multi-server:latest
+          docker push pranchal04/multi-worker:latest
  
-          docker push pranchal04/multi-client-k8s-gh:${{ env.SHA }}
-          docker push pranchal04/multi-server-k8s-pgfix-gh:${{ env.SHA }}
-          docker push pranchal04/multi-worker-k8s-gh:${{ env.SHA }}
+          docker push pranchal04/multi-client:${{ env.SHA }}
+          docker push pranchal04/multi-server:${{ env.SHA }}
+          docker push pranchal04/multi-worker:${{ env.SHA }}
  
     # Imperative Command
       - name: Apply
         run: |-
           kubectl apply -f k8s
-          kubectl set image deployments/server-deployment server=pranchal04/multi-server-k8s-pgfix-gh:${{ env.SHA }}
-          kubectl set image deployments/client-deployment client=pranchal04/multi-client-k8s-gh:${{ env.SHA }}
-          kubectl set image deployments/worker-deployment worker=pranchal04/multi-worker-k8s-gh:${{ env.SHA }}
+          kubectl set image deployments/server-deployment server=pranchal04/multi-server:${{ env.SHA }}
+          kubectl set image deployments/client-deployment client=pranchal04/multi-client:${{ env.SHA }}
+          kubectl set image deployments/worker-deployment worker=pranchal04/multi-worker:${{ env.SHA }}
